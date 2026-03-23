@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local logs
+*.log
+
+# AI & Editor folders
+.claude/
+.cursor/
+.windsurf/
+.vscode/
+.idea/
