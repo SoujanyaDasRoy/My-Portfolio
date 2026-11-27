@@ -1,17 +1,10 @@
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
-import { Pause, Play } from "lucide-react";
 import s from "@/app/page.module.css";
 
-/** Slowly scrolling list of tools. Pauses on hover or with the button. */
+/** Slowly scrolling list of tools. Stops while hovered or pressed, and stays still for reduced motion. */
 export function ToolStrip({ tools }: { tools: string[][] }) {
-  const [paused, setPaused] = useState(false);
-  const label = paused ? "Play tool list" : "Pause tool list";
-
   return (
-    <div className={s.stack} data-paused={paused}>
+    <div className={s.stack}>
       <div className={s.stackMask}>
         <div className={s.stackTrack}>
           {/* repeated once so the loop has no seam; screen readers only get the first copy */}
@@ -27,9 +20,6 @@ export function ToolStrip({ tools }: { tools: string[][] }) {
           ))}
         </div>
       </div>
-      <button type="button" className={s.pause} onClick={() => setPaused(!paused)} aria-label={label} title={label}>
-        {paused ? <Play size={15} aria-hidden="true" /> : <Pause size={15} aria-hidden="true" />}
-      </button>
     </div>
   );
 }

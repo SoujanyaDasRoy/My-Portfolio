@@ -39,12 +39,11 @@
 .stack { display: flex; align-items: center; gap: 10px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 14px; font-weight: 500; color: var(--mute); }
 .stackMask { flex: 1; min-width: 0; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
 .stackTrack { display: flex; width: max-content; animation: slide 45s linear infinite; }
-.stackMask:hover .stackTrack, .stack[data-paused="true"] .stackTrack { animation-play-state: paused; }
+/* hover with a mouse, or press and hold on a touch screen, to stop it */
+.stackMask:hover .stackTrack, .stackMask:active .stackTrack { animation-play-state: paused; }
 .stackTrack ul { display: flex; gap: 34px; padding: 8px 34px 8px 0; list-style: none; }
 .stackTrack li { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
 .stackTrack img { border-radius: 6px; }
-.pause { display: grid; flex: none; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; background: var(--card); color: var(--ink); cursor: pointer; }
-.pause:hover { border-color: var(--ink); }
 @keyframes slide { to { translate: -50% 0; } }
 
 /* hero entrance: items lift in one after another */
@@ -66,7 +65,7 @@ h1.rise { animation-delay: 0.14s; }
   .stackMask { mask-image: none; }
   .stackTrack { width: auto; }
   .stackTrack ul { flex-wrap: wrap; gap: 10px 22px; padding-right: 0; }
-  .stackTrack ul + ul, .pause { display: none; }
+  .stackTrack ul + ul { display: none; }
 }
 
 /* ---------- work: colour tiles ---------- */
