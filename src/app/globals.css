@@ -1,13 +1,18 @@
-/* Warm light theme. Project colours do the decorating; the sign-off at the end is dark. */
+/* Warm light and warm dark. Follows the visitor's system setting until they use the toggle.
+   Project colours do the decorating; the sign-off at the end is dark in both. */
 :root {
-  color-scheme: light;
-  --bg: #f5f2ec;
-  --card: #fffdf9;
-  --line: #e0d9cd;
-  --ink: #221c17;
-  --mute: #5f564d;
-  --accent: #1f6a39; /* the soft green, deepened so it reads on a light page */
+  color-scheme: light dark;
+  --bg: light-dark(#f5f2ec, #15110e);
+  --card: light-dark(#fffdf9, #221c17);
+  --glass: light-dark(rgb(255 253 249 / 0.86), rgb(34 28 23 / 0.86));
+  --line: light-dark(#e0d9cd, #3a312a);
+  --ink: light-dark(#221c17, #f3ede4);
+  --mute: light-dark(#5f564d, #b9aea1);
+  --accent: light-dark(#1f6a39, #85d19b); /* the soft green, deep on light and pale on dark */
+  --icon-chip: light-dark(transparent, #f3ede4);
 }
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 

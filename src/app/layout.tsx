@@ -18,15 +18,26 @@ export const metadata: Metadata = {
   openGraph: { title, description, type: "website" },
 };
 
-export const viewport: Viewport = { themeColor: "#f5f2ec" };
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f5f2ec" },
+    { media: "(prefers-color-scheme: dark)", color: "#15110e" },
+  ],
+};
+
+// Runs before the first paint, so a saved choice never flashes the other theme.
+const applySavedTheme = `try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable} ${display.variable} ${hand.variable}`}>
+    <html lang="en" className={`${geist.variable} ${display.variable} ${hand.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: applySavedTheme }} />
+      </head>
       <body>
         {/* without JavaScript nothing can reveal itself, so show it all */}
         <noscript>
-          <style>{"[data-reveal]{opacity:1!important;transform:none!important}"}</style>
+          <style>{"[data-reveal]{opacity:1!important;transform:none!important}[data-theme-toggle]{display:none!important}"}</style>
         </noscript>
         {children}
       </body>
