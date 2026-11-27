@@ -41,7 +41,7 @@ export function SiteNav() {
       (entries) => entries.forEach((e) => e.isIntersecting && setCurrent("#" + e.target.id)),
       { rootMargin: "-45% 0px -54% 0px" },
     );
-    ["#top", ...links.map((l) => l.href)].forEach((id) => {
+    ["#top", "#experience", ...links.map((l) => l.href)].forEach((id) => {
       const section = document.querySelector(id);
       if (section) observer.observe(section);
     });

@@ -32,8 +32,8 @@ type Project = {
 
 const projects: Project[] = [
   { name: "VOID", slug: "void", kind: "E-commerce", summary: "A minimal clothing store with collection filtering, product pages and a cart.", builtWith: "Next.js, React, TypeScript, Tailwind CSS", live: "https://void-lime-two.vercel.app/" },
-  { name: "Tracknit", slug: "tracknit", kind: "Music licensing", summary: "A subscription platform for royalty-free music and sound effects.", builtWith: "Next.js, Framer Motion, GSAP, Zustand", live: "https://tracknit.vercel.app/" },
-  { name: "NeXaric", slug: "nexaric", kind: "Studio website", summary: "A website for a web design and growth studio.", builtWith: "Next.js, Three.js, GSAP, Tailwind CSS", live: "https://nexaric.vercel.app/" },
+  { name: "Tracknit", slug: "tracknit", kind: "Client · Music licensing", summary: "A subscription platform for royalty-free music and sound effects.", builtWith: "Next.js, Framer Motion, GSAP, Zustand", live: "https://tracknit.vercel.app/" },
+  { name: "NeXaric", slug: "nexaric", kind: "Client · Agency website", summary: "A website for a web design and growth studio.", builtWith: "Next.js, Three.js, GSAP, Tailwind CSS", live: "https://nexaric.vercel.app/" },
 ];
 
 const skills = [
@@ -89,7 +89,6 @@ export default function Page() {
               <p className={`${s.intro} ${s.rise}`}>A full stack developer, open to full{"‑"}time, remote and freelance work.</p>
               <div className={`${s.actions} ${s.rise}`}>
                 <a href="#work" className={s.primary}>View work</a>
-                <a href="#contact" className={s.secondary}>Contact</a>
                 <a href={RESUME} target="_blank" rel="noopener" className={s.secondary}><FileText size={17} aria-hidden="true" />Résumé</a>
               </div>
             </div>
@@ -137,24 +136,6 @@ export default function Page() {
           </div>
         </section>
 
-        <section id="about" className={`${s.wrap} ${s.section}`} aria-labelledby="about-title">
-          <Reveal>
-            <h2 id="about-title" className={s.label}>About</h2>
-            <p className={s.statement}>I build modern, responsive interfaces that look calm and hold up technically.</p>
-          </Reveal>
-          <Reveal className={s.aboutGrid} delay={0.1}>
-            <p className={s.body}>I mostly work with React, Next.js and Node.js, and have used WordPress and Elementor for rapid builds. I value simplicity, performance and maintainable code.</p>
-            <dl className={s.skills}>
-              {skills.map(([group, list]) => (
-                <div key={group}>
-                  <dt>{group}</dt>
-                  <dd>{list}</dd>
-                </div>
-              ))}
-            </dl>
-          </Reveal>
-        </section>
-
         <section id="experience" className={`${s.wrap} ${s.section}`} aria-labelledby="experience-title">
           <Reveal><h2 id="experience-title" className={s.title}>Experience</h2></Reveal>
           <ol className={s.jobs}>
@@ -173,6 +154,24 @@ export default function Page() {
               </li>
             ))}
           </ol>
+        </section>
+
+        <section id="about" className={`${s.wrap} ${s.section}`} aria-labelledby="about-title">
+          <Reveal>
+            <h2 id="about-title" className={s.label}>About</h2>
+            <p className={s.statement}>I build modern, responsive interfaces that look calm and hold up technically.</p>
+          </Reveal>
+          <Reveal className={s.aboutGrid} delay={0.1}>
+            <p className={s.body}>I mostly work with React, Next.js and Node.js, and have used WordPress and Elementor for rapid builds. I value simplicity, performance and maintainable code.</p>
+            <dl className={s.skills}>
+              {skills.map(([group, list]) => (
+                <div key={group}>
+                  <dt>{group}</dt>
+                  <dd>{list}</dd>
+                </div>
+              ))}
+            </dl>
+          </Reveal>
         </section>
 
         {offHours.length > 0 && (

@@ -36,12 +36,6 @@
 .primary:hover { background: var(--accent); border-color: var(--accent); }
 .secondary:hover { background: var(--ink); color: var(--bg); }
 .primary:active, .secondary:active { translate: 0 1px; }
-/* three buttons stay on one row on phones */
-@media (max-width: 480px) {
-  .actions { gap: 8px; }
-  .actions .primary, .actions .secondary { padding: 0 16px; }
-  .actions svg { display: none; }
-}
 /* the photo shrinks with the window so the tools row stays on the first screen; soft glow in its own colours */
 .portrait { position: relative; justify-self: end; width: min(100%, 340px, calc((100svh - 250px) * 0.8)); }
 .portrait::before { content: ""; position: absolute; inset: 12% 0 -6%; border-radius: 50%; background: linear-gradient(120deg, #6fb7e8, #7fae6a 55%, #e6c34a); filter: blur(48px); opacity: 0.45; }
@@ -200,4 +194,5 @@ h1.rise { animation-delay: 0.14s; }
   .brand { padding-inline: 10px; font-size: 22px; }
   .nav { font-size: 13px; }
   .nav a { padding: 0 7px; }
+  .actions .primary, .actions .secondary { padding: 0 20px; }
 }
