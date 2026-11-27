@@ -26,11 +26,17 @@
 .hero h1 { margin-top: 6px; font-family: var(--font-display), sans-serif; font-size: clamp(40px, min(6vw, 11.5svh), 82px); font-weight: 600; line-height: 1.02; letter-spacing: -0.045em; text-wrap: balance; }
 .intro { max-width: 44ch; margin-top: 22px; font-size: clamp(17px, 1.6vw, 20px); color: var(--mute); text-wrap: pretty; }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
-.primary, .secondary { display: inline-flex; align-items: center; min-height: 50px; padding: 0 28px; border: 1px solid var(--ink); border-radius: 999px; font-weight: 600; transition: background 0.2s, color 0.2s, translate 0.2s; }
+.primary, .secondary { display: inline-flex; align-items: center; gap: 8px; min-height: 50px; padding: 0 28px; border: 1px solid var(--ink); border-radius: 999px; font-weight: 600; transition: background 0.2s, color 0.2s, translate 0.2s; }
 .primary { background: var(--ink); color: var(--bg); }
 .primary:hover { background: var(--accent); border-color: var(--accent); }
 .secondary:hover { background: var(--ink); color: var(--bg); }
 .primary:active, .secondary:active { translate: 0 1px; }
+/* three buttons stay on one row on phones */
+@media (max-width: 480px) {
+  .actions { gap: 8px; }
+  .actions .primary, .actions .secondary { padding: 0 16px; }
+  .actions svg { display: none; }
+}
 /* the photo shrinks with the window so the tools row stays on the first screen; soft glow in its own colours */
 .portrait { position: relative; justify-self: end; width: min(100%, 340px, calc((100svh - 250px) * 0.8)); }
 .portrait::before { content: ""; position: absolute; inset: 12% 0 -6%; border-radius: 50%; background: linear-gradient(120deg, #6fb7e8, #7fae6a 55%, #e6c34a); filter: blur(48px); opacity: 0.45; }
@@ -104,7 +110,7 @@ h1.rise { animation-delay: 0.14s; }
 .statement { max-width: 22ch; margin-top: 12px; font-family: var(--font-display), sans-serif; font-size: clamp(32px, 5vw, 64px); font-weight: 500; line-height: 1.12; letter-spacing: -0.035em; text-wrap: balance; }
 .aboutGrid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; gap: 40px 72px; margin-top: 48px; }
 .body { font-size: 18px; color: var(--mute); }
-.skills > div { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 16px; padding-block: 18px; border-top: 1px solid var(--line); }
+.skills > div { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; padding-block: 18px; border-top: 1px solid var(--line); }
 .skills dt { font-weight: 600; }
 .skills dd { color: var(--mute); }
 .offHours { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; margin-top: 32px; list-style: none; }

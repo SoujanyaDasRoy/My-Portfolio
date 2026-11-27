@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Github, Linkedin } from "lucide-react";
+import { FileText, Github, Linkedin } from "lucide-react";
 import { ContactForm } from "@/components/contact-form";
 import { Drift, MotionProvider, Reveal } from "@/components/motion";
 import { SiteNav } from "@/components/site-nav";
@@ -9,6 +9,7 @@ import s from "./page.module.css";
 const GITHUB = "https://github.com/SoujanyaDasRoy";
 const LINKEDIN = "https://linkedin.com/in/soujanyadasroy";
 const EMAIL = "soujanyadasroy@gmail.com";
+const RESUME = "/Soujanya-Das-Roy-Resume.pdf";
 
 // [label, icon file in /public/tech]. Icons: skillicons.dev (MIT); shadcn and framer marks from Simple Icons (CC0).
 const heroStack = [
@@ -36,11 +37,12 @@ const projects: Project[] = [
 ];
 
 const skills = [
-  ["Frontend", "HTML, CSS, JavaScript, TypeScript, React, Next.js, Tailwind CSS, Material UI, shadcn/ui, Framer Motion"],
-  ["Backend", "Node.js, Express, REST APIs"],
-  ["Databases", "MongoDB, PostgreSQL, Prisma (ORM)"],
-  ["Deployment", "Cloudflare, Vercel, Netlify"],
-  ["Tools", "Git"],
+  ["Languages", "JavaScript, TypeScript, SQL"],
+  ["Frontend", "React, Next.js, Tailwind CSS, shadcn/ui, Material UI, Responsive Web Design"],
+  ["Animation", "GSAP, Framer Motion"],
+  ["Backend and APIs", "Node.js, Express, REST APIs, API Integration, CRUD Operations"],
+  ["Database and ORM", "PostgreSQL, MongoDB, Prisma"],
+  ["Deployment and tools", "Vercel, Netlify, Cloudflare Workers, Git, GitHub, npm, VS Code, Postman"],
 ];
 
 /** "When I'm not coding". The section appears once real entries are added here. */
@@ -62,6 +64,7 @@ export default function Page() {
               <div className={`${s.actions} ${s.rise}`}>
                 <a href="#work" className={s.primary}>View work</a>
                 <a href="#contact" className={s.secondary}>Contact</a>
+                <a href={RESUME} target="_blank" rel="noopener" className={s.secondary}><FileText size={17} aria-hidden="true" />Résumé</a>
               </div>
             </div>
             <div className={s.portrait}>
@@ -149,6 +152,7 @@ export default function Page() {
                 <p className={s.elsewhere}>
                   <a href={GITHUB} target="_blank" rel="noopener noreferrer"><Github size={18} aria-hidden="true" />GitHub</a>
                   <a href={LINKEDIN} target="_blank" rel="noopener noreferrer"><Linkedin size={18} aria-hidden="true" />LinkedIn</a>
+                  <a href={RESUME} target="_blank" rel="noopener"><FileText size={18} aria-hidden="true" />Résumé (PDF)</a>
                 </p>
               </div>
               <ContactForm />
