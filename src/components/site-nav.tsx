@@ -12,12 +12,16 @@ const links = [
   { href: "#contact", label: "Contact" },
 ];
 
+// keeps the phone browser bar the same colour as the page
+function matchBrowserBar(theme: string) {
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "light" ? "#f5f2ec" : "#15110e");
+}
+
 function toggleTheme() {
   const root = document.documentElement;
-  const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
-  const next = dark ? "light" : "dark";
+  const next = root.dataset.theme === "light" ? "dark" : "light";
   root.dataset.theme = next;
-  document.querySelectorAll('meta[name="theme-color"]').forEach((m) => m.setAttribute("content", next === "dark" ? "#15110e" : "#f5f2ec"));
+  matchBrowserBar(next);
   try {
     localStorage.setItem("theme", next);
   } catch {
@@ -28,6 +32,8 @@ function toggleTheme() {
 export function SiteNav() {
   const [current, setCurrent] = useState("");
   const reduce = useReducedMotion();
+
+  useEffect(() => matchBrowserBar(document.documentElement.dataset.theme ?? "dark"), []);
 
   // Mark the section crossing the middle of the window.
   useEffect(() => {

@@ -1,7 +1,7 @@
-/* Warm light and warm dark. Follows the visitor's system setting until they use the toggle.
+/* Warm dark by default; the navbar toggle switches to warm light.
    Project colours do the decorating; the sign-off at the end is dark in both. */
 :root {
-  color-scheme: light dark;
+  color-scheme: dark;
   --bg: light-dark(#f5f2ec, #15110e);
   --card: light-dark(#fffdf9, #221c17);
   --glass: light-dark(rgb(255 253 249 / 0.86), rgb(34 28 23 / 0.86));
@@ -12,7 +12,6 @@
   --icon-chip: light-dark(transparent, #f3ede4);
 }
 :root[data-theme="light"] { color-scheme: light; }
-:root[data-theme="dark"] { color-scheme: dark; }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 

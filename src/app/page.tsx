@@ -45,6 +45,32 @@ const skills = [
   ["Deployment and tools", "Vercel, Netlify, Cloudflare Workers, Git, GitHub, npm, VS Code, Postman"],
 ];
 
+// Taken from the résumé; keep the two in step.
+const experience = [
+  {
+    role: "Full Stack Developer",
+    company: "AstraX",
+    dates: "September 2026 to present",
+    points: [
+      "Build frontend projects and product showcase pages with Next.js and React, turning product requirements into responsive, polished experiences.",
+      "Create reusable components, interactive layouts and motion-driven interfaces with Tailwind CSS, shadcn/ui, Material UI, GSAP and Framer Motion.",
+      "Work with REST APIs, connect frontends to backend services, and help build and expose application services.",
+      "Deploy with Vercel, Netlify, Cloudflare and Git.",
+      "Designed and built Reelsmith, which streamlines social media management for creators and teams and helps them make polished reels.",
+    ],
+  },
+  {
+    role: "Software Developer Intern (Frontend)",
+    company: "Make Me Global",
+    dates: "December 2024 to February 2025",
+    points: [
+      "Turned Figma designs into responsive web interfaces and reusable frontend components.",
+      "Worked on mobile-first layouts, performance, accessibility, cross-browser compatibility, animations and bug fixes.",
+      "Collaborated with designers and backend developers to deliver maintainable frontend solutions.",
+    ],
+  },
+];
+
 /** "When I'm not coding". The section appears once real entries are added here. */
 const offHours: { title: string; text: string }[] = [];
 
@@ -127,6 +153,26 @@ export default function Page() {
               ))}
             </dl>
           </Reveal>
+        </section>
+
+        <section id="experience" className={`${s.wrap} ${s.section}`} aria-labelledby="experience-title">
+          <Reveal><h2 id="experience-title" className={s.title}>Experience</h2></Reveal>
+          <ol className={s.jobs}>
+            {experience.map((job) => (
+              <li key={job.company}>
+                <Reveal className={s.job}>
+                  <div>
+                    <h3>{job.role}</h3>
+                    <p className={s.company}>{job.company}</p>
+                    <p className={s.dates}>{job.dates}</p>
+                  </div>
+                  <ul>
+                    {job.points.map((point) => <li key={point}>{point}</li>)}
+                  </ul>
+                </Reveal>
+              </li>
+            ))}
+          </ol>
         </section>
 
         {offHours.length > 0 && (

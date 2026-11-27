@@ -18,15 +18,10 @@ export const metadata: Metadata = {
   openGraph: { title, description, type: "website" },
 };
 
-export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f5f2ec" },
-    { media: "(prefers-color-scheme: dark)", color: "#15110e" },
-  ],
-};
+export const viewport: Viewport = { themeColor: "#15110e" };
 
 // Runs before the first paint, so a saved choice never flashes the other theme.
-const applySavedTheme = `try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`;
+const applySavedTheme = `try{if(localStorage.getItem("theme")==="light")document.documentElement.dataset.theme="light"}catch(e){}`;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
