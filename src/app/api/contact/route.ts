@@ -1,12 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { escapeHtml, parseContact } from "@/lib/contact";
 
-interface ContactBody {
-  name: string;
-  email: string;
-  message: string;
-  website?: string; // honeypot field
-}
+const UNAVAILABLE = "Could not send right now. Please email me directly.";
 
 /* ─── simple in-memory rate limiter with cleanup ─── */
 const rateLimitMap = new Map<string, { count: number; timestamp: number }>();
@@ -59,44 +55,23 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    const body: ContactBody = await req.json();
+    const parsed = parseContact(await req.json().catch(() => null));
+    if (!parsed.ok) {
+      return NextResponse.json({ error: parsed.error }, { status: 400 });
+    }
 
     /* ── honeypot check (bots fill hidden fields) ── */
-    if (body.website) {
+    if (parsed.isBot) {
       // Silently succeed — don't tip off the bot
       return NextResponse.json({ success: true, message: "Message received!" }, { status: 200 });
     }
 
-    /* ── validation ── */
-    if (!body.name || !body.email || !body.message) {
-      return NextResponse.json(
-        { error: "All fields are required." },
-        { status: 400 }
-      );
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(body.email)) {
-      return NextResponse.json(
-        { error: "Invalid email address." },
-        { status: 400 }
-      );
-    }
-
-    // Reject very short or suspicious messages
-    if (body.name.length < 2 || body.message.length < 10) {
-      return NextResponse.json(
-        { error: "Please provide a valid name and a message with at least 10 characters." },
-        { status: 400 }
-      );
-    }
+    const { name, email, message } = parsed.data;
 
     /* ── send email via Nodemailer ── */
     if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
-      return NextResponse.json(
-        { error: "Missing Gmail configuration. Make sure GMAIL_USER and GMAIL_APP_PASSWORD exist in .env.local and you restarted your dev server." },
-        { status: 500 }
-      );
+      console.error("Contact form: GMAIL_USER or GMAIL_APP_PASSWORD is not set.");
+      return NextResponse.json({ error: UNAVAILABLE }, { status: 500 });
     }
 
     const transporter = nodemailer.createTransport({
@@ -108,18 +83,18 @@ export async function POST(req: NextRequest) {
     });
 
     const mailOptions = {
-      from: `"${body.name} (Portfolio)" <${process.env.GMAIL_USER}>`, 
-      replyTo: body.email,
+      from: `"${name} (Portfolio)" <${process.env.GMAIL_USER}>`, 
+      replyTo: email,
       to: process.env.GMAIL_USER,
-      subject: `Portfolio Contact — ${body.name}`,
+      subject: `Portfolio Contact — ${name}`,
       html: `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 560px; margin: 0 auto; padding: 32px 0;">
           <h2 style="color: #059669; font-size: 20px; margin-bottom: 4px;">New Contact Form Message</h2>
           <hr style="border: none; border-top: 1px solid #e5e5e5; margin: 16px 0;" />
           <p style="margin: 12px 0 4px; font-size: 13px; color: #888; text-transform: uppercase; letter-spacing: 0.05em;">From</p>
-          <p style="margin: 0; font-size: 16px; color: #1a1a1a;"><strong>${body.name}</strong> &lt;${body.email}&gt;</p>
+          <p style="margin: 0; font-size: 16px; color: #1a1a1a;"><strong>${escapeHtml(name)}</strong> &lt;${escapeHtml(email)}&gt;</p>
           <p style="margin: 20px 0 4px; font-size: 13px; color: #888; text-transform: uppercase; letter-spacing: 0.05em;">Message</p>
-          <div style="background: #f9f9f6; padding: 16px; border-radius: 8px; font-size: 15px; color: #333; white-space: pre-wrap; line-height: 1.6;">${body.message}</div>
+          <div style="background: #f9f9f6; padding: 16px; border-radius: 8px; font-size: 15px; color: #333; white-space: pre-wrap; line-height: 1.6;">${escapeHtml(message)}</div>
           <hr style="border: none; border-top: 1px solid #e5e5e5; margin: 24px 0 12px;" />
           <p style="font-size: 12px; color: #aaa;">Sent from your portfolio contact form • You can reply directly to this email.</p>
         </div>
@@ -133,10 +108,7 @@ export async function POST(req: NextRequest) {
       { status: 200 }
     );
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Internal server error.";
-    return NextResponse.json(
-      { error: message },
-      { status: 500 }
-    );
+    console.error("Contact form failed:", err);
+    return NextResponse.json({ error: UNAVAILABLE }, { status: 500 });
   }
 }
